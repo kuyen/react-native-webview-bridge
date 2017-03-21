@@ -67,11 +67,11 @@ var WebViewBridge = React.createClass({
     };
   },
 
-  
   componentWillMount: function() {
-    DeviceEventEmitter.addListener("webViewBridgeMessage", (body) => {
-      const { onBridgeMessage } = this.props;
-      const message = body.message;
+    DeviceEventEmitter.addListener('webViewBridgeMessage', function (body) {
+      var { onBridgeMessage } = this.props;
+      console.info('onBridgeMessage=>', onBridgeMessage);
+      var message = body.message;
       if (onBridgeMessage) {
         onBridgeMessage(message);
       }
@@ -128,6 +128,7 @@ var WebViewBridge = React.createClass({
         onLoadingFinish={this.onLoadingFinish}
         onLoadingError={this.onLoadingError}
         onChange={this.onMessage}
+        messagingEnabled={true}
       />;
 
     return (
@@ -142,6 +143,9 @@ var WebViewBridge = React.createClass({
     if (this.props.onBridgeMessage != null && event.nativeEvent != null) {
       this.props.onBridgeMessage(event.nativeEvent.message)
     }
+    console.info('onMessage=> onBridgeMessage:', this.props.onBridgeMessage);
+    console.info('onMessage=> event:', event);
+    console.info('onMessage=> event.nativeEvent:', event.nativeEvent !== null);
   },
 
   goForward: function() {
